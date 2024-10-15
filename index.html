@@ -3,199 +3,83 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoAlimentos</title>
+    <title>Boas Vindas</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f0f8ff;
-            padding: 50px;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
         }
         h1 {
-            color: #4CAF50;
-        }
-        .button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 15px 32px;
             text-align: center;
-            display: inline-block;
+        }
+        button {
+            display: block;
+            margin: 10px auto;
+            padding: 10px 20px;
             font-size: 16px;
-            margin: 20px;
             cursor: pointer;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
         }
-        .button:hover {
-            background-color: #45a049;
-        }
-        .form-container {
-            margin: 20px 0;
-            display: inline-block;
-            text-align: left;
-        }
-        input[type="text"], input[type="number"] {
-            width: 80%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        #itemList {
-            margin-top: 20px;
-            text-align: left;
-            border: 1px solid #ccc;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #fff;
-        }
-        #result {
-            margin-top: 20px;
-            font-weight: bold;
-        }
-        .recipe {
-            margin: 20px 0;
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #fff;
-            text-align: left;
-        }
-        .finalize-list {
-            margin-top: 20px;
+        .section {
             display: none;
-            text-align: left;
+            margin-top: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .message {
+            text-align: center;
+            margin: 20px 0;
+            font-weight: bold;
+            color: #d9534f; /* Cor de destaque */
         }
     </style>
-    <script>
-        let itemList = [];
-        
-        function addItem() {
-            const itemName = document.getElementById("itemName").value;
-            const itemPrice = parseFloat(document.getElementById("itemPrice").value);
-            const itemQuantity = parseInt(document.getElementById("itemQuantity").value);
-
-            if (itemName && itemPrice && itemQuantity) {
-                itemList.push({ name: itemName, price: itemPrice, quantity: itemQuantity });
-                document.getElementById("itemName").value = '';
-                document.getElementById("itemPrice").value = '';
-                document.getElementById("itemQuantity").value = '';
-                displayItems();
-            } else {
-                alert("Por favor, preencha todos os campos.");
-            }
-        }
-
-        function displayItems() {
-            const itemListDiv = document.getElementById("itemList");
-            itemListDiv.innerHTML = "";
-            let totalCost = 0;
-
-            itemList.forEach(item => {
-                totalCost += item.price * item.quantity;
-                itemListDiv.innerHTML += `<p>${item.name} - R$ ${item.price.toFixed(2)} (Quantidade: ${item.quantity})</p>`;
-            });
-            itemListDiv.innerHTML += `<p>Total Estimado: R$ ${totalCost.toFixed(2)}</p>`;
-            document.getElementById("finalizeButton").style.display = 'inline-block';
-        }
-
-        function finalizeList() {
-            const finalizeDiv = document.getElementById("finalizeList");
-            finalizeDiv.innerHTML = "<h3>Lista de Compras:</h3>";
-            itemList.forEach(item => {
-                finalizeDiv.innerHTML += `<p>${item.name} - R$ ${item.price.toFixed(2)} (Quantidade: ${item.quantity})</p>`;
-            });
-            finalizeDiv.innerHTML += `<p><strong>Total: R$ ${(itemList.reduce((sum, item) => sum + (item.price * item.quantity), 0)).toFixed(2)}</strong></p>`;
-            finalizeDiv.style.display = 'block';
-        }
-
-        function showSection(section) {
-            document.getElementById("compras").style.display = 'none';
-            document.getElementById("receitas").style.display = 'none';
-            document.getElementById(section).style.display = 'block';
-        }
-
-        // Exibe a seção de compras por padrão ao carregar a página
-        window.onload = function() {
-            showSection('compras');
-        };
-    </script>
 </head>
 <body>
-    <h1>Bem-vindo ao EcoAlimentos!</h1>
-    <p>O que você gostaria de fazer?</p>
-    <a href="#compras" class="button" onclick="showSection('compras')">Calcular Valor das Minhas Compras</a>
-    <a href="#receitas" class="button" onclick="showSection('receitas')">Ver Receitas de Reaproveitamento de Alimentos</a>
+    <h1>Bem-vindo ao Reaproveitamento de Alimentos!</h1>
+    <button onclick="showSection('shopping')">Calcular Valor das Minhas Compras</button>
+    <button onclick="showSection('recipes')">Ver Receitas de Reaproveitamento de Alimentos</button>
 
-    <div id="compras" style="display:none;">
-        <h2>Lista de Compras</h2>
-        <div class="form-container">
-            <input type="text" id="itemName" placeholder="Nome do Item" required>
-            <input type="number" id="itemPrice" placeholder="Preço Unitário (R$)" step="0.01" required>
-            <input type="number" id="itemQuantity" placeholder="Quantidade" required>
-            <button class="button" onclick="addItem()">Adicionar Item</button>
-        </div>
-        <div id="itemList"></div>
-        <button id="finalizeButton" class="button" onclick="finalizeList()" style="display:none;">Finalizar Lista</button>
-        <div id="finalizeList" class="finalize-list"></div>
+    <div class="message">
+        Evite desperdícios, compre só o necessário!
     </div>
 
-    <div id="receitas" style="display:none;">
-        <h2>Receitas de Reaproveitamento de Alimentos</h2>
-        
-        <div class="recipe">
-            <h3>Sopa de Legumes</h3>
-            <p><strong>Ingredientes:</strong></p>
-            <ul>
-                <li>Sobras de legumes (como cenoura, abobrinha, batata, etc.)</li>
-                <li>1 cebola picada</li>
-                <li>2 dentes de alho picados</li>
-                <li>1 litro de água ou caldo de legumes</li>
-                <li>Sal e pimenta a gosto</li>
-                <li>Ervas frescas (como salsinha ou cebolinha) a gosto</li>
-            </ul>
-            <p><strong>Modo de Preparo:</strong></p>
-            <ol>
-                <li>Em uma panela, refogue a cebola e o alho até ficarem dourados.</li>
-                <li>Adicione os legumes picados e refogue por mais alguns minutos.</li>
-                <li>Adicione a água ou caldo de legumes e cozinhe até que os legumes estejam macios.</li>
-                <li>Tempere com sal, pimenta e ervas a gosto. Sirva quente.</li>
-            </ol>
-        </div>
+    <div id="shopping" class="section">
+        <h2>Lista de Compras</h2>
+        <p>Digite os itens e seus preços:</p>
+        <ul>
+            <li>Arroz - R$ 5,00</li>
+            <li>Feijão - R$ 4,00</li>
+            <li>Frango - R$ 15,00</li>
+            <li>Batata - R$ 3,00</li>
+            <li>Cenoura - R$ 2,00</li>
+            <li>Tomate - R$ 4,00</li>
+            <li>Cebola - R$ 2,50</li>
+            <li>Pimentão - R$ 3,50</li>
+            <li>Alface - R$ 2,00</li>
+            <li>Queijo - R$ 10,00</li>
+            <li>Leite - R$ 4,50</li>
+            <li>Ovos - R$ 6,00</li>
+            <li>Farinha - R$ 3,00</li>
+            <li>Azeite - R$ 15,00</li>
+            <li>Salsicha - R$ 7,00</li>
+        </ul>
+    </div>
 
-        <div class="recipe">
-            <h3>Arroz de Forno</h3>
-            <p><strong>Ingredientes:</strong></p>
-            <ul>
-                <li>2 xícaras de sobras de arroz cozido</li>
-                <li>1 xícara de queijo ralado</li>
-                <li>1 xícara de presunto ou peito de frango desfiado</li>
-                <li>1/2 xícara de legumes cozidos (ervilha, milho, etc.)</li>
-                <li>2 ovos batidos</li>
-                <li>1/2 xícara de leite</li>
-                <li>Sal e pimenta a gosto</li>
-                <li>Queijo ralado para cobrir</li>
-            </ul>
-            <p><strong>Modo de Preparo:</strong></p>
-            <ol>
-                <li>Preaqueça o forno a 180°C.</li>
-                <li>Em uma tigela, misture o arroz, queijo, presunto, legumes, ovos e leite. Tempere com sal e pimenta.</li>
-                <li>Coloque a mistura em um refratário untado e cubra com queijo ralado.</li>
-                <li>Leve ao forno por aproximadamente 30 minutos ou até dourar.</li>
-            </ol>
-        </div>
+    <div id="recipes" class="section">
+        <h2>Receitas de Reaproveitamento de Alimentos</h2>
 
         <div class="recipe">
             <h3>Panquecas de Sobras</h3>
             <p><strong>Ingredientes:</strong></p>
             <ul>
-                <li>1 xícara de sobras de carne moída ou legumes cozidos</li>
+                <li>2 xícaras de sobras de carne ou legumes</li>
                 <li>1 xícara de farinha de trigo</li>
                 <li>1 xícara de leite</li>
                 <li>2 ovos</li>
                 <li>Sal e pimenta a gosto</li>
-                <li>Óleo para untar a frigideira</li>
             </ul>
             <p><strong>Modo de Preparo:</strong></p>
             <ol>
@@ -247,6 +131,166 @@
             </ol>
         </div>
 
+        <div class="recipe">
+            <h3>Sopa de Legumes</h3>
+            <p><strong>Ingredientes:</strong></p>
+            <ul>
+                <li>2 xícaras de sobras de legumes (batata, cenoura, abobrinha)</li>
+                <li>1 litro de caldo de legumes</li>
+                <li>1 cebola picada</li>
+                <li>2 dentes de alho picados</li>
+                <li>Azeite, sal e pimenta a gosto</li>
+            </ul>
+            <p><strong>Modo de Preparo:</strong></p>
+            <ol>
+                <li>Refogue a cebola e o alho em azeite até dourar.</li>
+                <li>Adicione os legumes e o caldo de legumes, e cozinhe por 20 minutos.</li>
+                <li>Tempere com sal e pimenta a gosto antes de servir.</li>
+            </ol>
+        </div>
+
+        <div class="recipe">
+            <h3>Pão de Queijo com Sobras</h3>
+            <p><strong>Ingredientes:</strong></p>
+            <ul>
+                <li>1 xícara de sobras de queijo ralado</li>
+                <li>2 xícaras de polvilho azedo</li>
+                <li>2 ovos</li>
+                <li>1/2 xícara de leite</li>
+                <li>1/4 xícara de óleo</li>
+                <li>Sal a gosto</li>
+            </ul>
+            <p><strong>Modo de Preparo:</strong></p>
+            <ol>
+                <li>Preaqueça o forno a 180°C.</li>
+                <li>Misture todos os ingredientes até obter uma massa homogênea.</li>
+                <li>Faça bolinhas e coloque em uma forma untada.</li>
+                <li>Asse por 20-25 minutos ou até dourar.</li>
+            </ol>
+        </div>
+
+        <div class="recipe">
+            <h3>Macarrão ao Forno com Restos</h3>
+            <p><strong>Ingredientes:</strong></p>
+            <ul>
+                <li>2 xícaras de sobras de macarrão cozido</li>
+                <li>1 xícara de molho de tomate</li>
+                <li>1 xícara de queijo ralado</li>
+                <li>1/2 xícara de presunto ou carne moída (opcional)</li>
+                <li>Temperos a gosto</li>
+            </ul>
+            <p><strong>Modo de Preparo:</strong></p>
+            <ol>
+                <li>Preaqueça o forno a 180°C.</li>
+                <li>Em uma tigela, misture o macarrão, molho de tomate, queijo e presunto.</li>
+                <li>Coloque em uma forma untada e cubra com queijo ralado.</li>
+                <li>Asse por 30 minutos ou até o queijo derreter.</li>
+            </ol>
+        </div>
+
+        <div class="recipe">
+            <h3>Risoto de Arroz Velho</h3>
+            <p><strong>Ingredientes:</strong></p>
+            <ul>
+                <li>2 xícaras de arroz cozido</li>
+                <li>1 litro de caldo de legumes</li>
+                <li>1 cebola picada</li>
+                <li>1/2 xícara de vinho branco (opcional)</li>
+                <li>Queijo ralado a gosto</li>
+                <li>Sal e pimenta a gosto</li>
+            </ul>
+            <p><strong>Modo de Preparo:</strong></p>
+            <ol>
+                <li>Refogue a cebola até dourar.</li>
+                <li>Adicione o arroz e misture bem.</li>
+                <li>Adicione o vinho e o caldo aos poucos, mexendo sempre.</li>
+                <li>Finalize com queijo, sal e pimenta antes de servir.</li>
+            </ol>
+        </div>
+
+        <div class="recipe">
+            <h3>Creme de Abóbora com Sopa</h3>
+            <p><strong>Ingredientes:</strong></p>
+            <ul>
+                <li>2 xícaras de abóbora cozida</li>
+                <li>1 litro de caldo de galinha</li>
+                <li>1 cebola picada</li>
+                <li>2 dentes de alho picados</li>
+                <li>Sal e pimenta a gosto</li>
+            </ul>
+            <p><strong>Modo de Preparo:</strong></p>
+            <ol>
+                <li>Refogue a cebola e o alho em azeite até dourar.</li>
+                <li>Adicione a abóbora e o caldo de galinha, e cozinhe por 15 minutos.</li>
+                <li>Bata tudo no liquidificador e tempere a gosto.</li>
+            </ol>
+        </div>
+
+        <div class="recipe">
+            <h3>Fritada de Legumes</h3>
+            <p><strong>Ingredientes:</strong></p>
+            <ul>
+                <li>2 xícaras de sobras de legumes picados</li>
+                <li>3 ovos batidos</li>
+                <li>Sal e pimenta a gosto</li>
+                <li>Azeite para untar</li>
+            </ul>
+            <p><strong>Modo de Preparo:</strong></p>
+            <ol>
+                <li>Em uma frigideira untada, coloque os legumes e refogue por alguns minutos.</li>
+                <li>Despeje os ovos batidos por cima e cozinhe até firmar.</li>
+                <li>Vire e cozinhe do outro lado antes de servir.</li>
+            </ol>
+        </div>
+
+        <div class="recipe">
+            <h3>Quiche de Legumes com Sobras</h3>
+            <p><strong>Ingredientes:</strong></p>
+            <ul>
+                <li>1 base de massa (comprada ou feita em casa)</li>
+                <li>2 xícaras de sobras de legumes</li>
+                <li>3 ovos</li>
+                <li>1 xícara de leite</li>
+                <li>Queijo a gosto</li>
+                <li>Sal e pimenta a gosto</li>
+            </ul>
+            <p><strong>Modo de Preparo:</strong></p>
+            <ol>
+                <li>Preaqueça o forno a 180°C.</li>
+                <li>Em uma tigela, misture os ovos, leite, sal e pimenta.</li>
+                <li>Adicione os legumes e misture bem.</li>
+                <li>Despeje sobre a massa e cubra com queijo.</li>
+                <li>Asse por cerca de 40 minutos ou até dourar.</li>
+            </ol>
+        </div>
+
+        <div class="recipe">
+            <h3>Docinhos de Frutas Maduras</h3>
+            <p><strong>Ingredientes:</strong></p>
+            <ul>
+                <li>2 xícaras de sobras de frutas maduras</li>
+                <li>1 xícara de açúcar</li>
+                <li>1/2 xícara de coco ralado</li>
+                <li>2 colheres de sopa de manteiga</li>
+            </ul>
+            <p><strong>Modo de Preparo:</strong></p>
+            <ol>
+                <li>Em uma panela, misture todos os ingredientes e cozinhe em fogo baixo até desgrudar do fundo.</li>
+                <li>Deixe esfriar e faça bolinhas.</li>
+                <li>Passe no coco ralado e sirva.</li>
+            </ol>
+        </div>
+
     </div>
+
+    <script>
+        function showSection(section) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(sec => {
+                sec.style.display = 'none';
+            });
+            document.getElementById(section).style.display = 'block';
+        }
+    </script>
 </body>
 </html>
