@@ -99,9 +99,9 @@
     <div id="compras" style="display:none;">
         <h2>Lista de Compras</h2>
         <div class="form-container">
-            <input type="text" id="itemName" placeholder="Nome do Item">
-            <input type="number" id="itemPrice" placeholder="Preço Unitário (R$)" step="0.01">
-            <input type="number" id="itemQuantity" placeholder="Quantidade">
+            <input type="text" id="itemName" placeholder="Nome do Item" required>
+            <input type="number" id="itemPrice" placeholder="Preço Unitário (R$)" step="0.01" required>
+            <input type="number" id="itemQuantity" placeholder="Quantidade" required>
             <button class="button" onclick="addItem()">Adicionar Item</button>
         </div>
         <div id="itemList"></div>
