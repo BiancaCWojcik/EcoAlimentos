@@ -56,6 +56,7 @@
             display: none;
         }
     </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
     <script>
         let itemList = [];
         
@@ -98,16 +99,19 @@
             finalizeDiv.innerHTML += "<p><strong>Evite desperdícios, compre somente o necessário!</strong></p>";
         }
 
-        function copyToClipboard() {
-            const finalizeDiv = document.getElementById("finalizeList");
-            const textToCopy = finalizeDiv.innerHTML.replace(/<\/?[^>]+(>|$)/g, ""); // Remove tags HTML
-            navigator.clipboard.writeText(textToCopy)
-                .then(() => {
-                    alert("Lista copiada para a área de transferência! Agora você pode colar no WhatsApp.");
-                })
-                .catch(err => {
-                    console.error('Erro ao copiar para a área de transferência: ', err);
+        function shareViaWhatsApp() {
+            html2canvas(document.getElementById("finalizeList")).then(canvas => {
+                canvas.toBlob(blob => {
+                    const url = URL.createObjectURL(blob);
+                    const whatsappUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(canvas.toDataURL())}`;
+                    window.open(whatsappUrl, "_blank");
                 });
+            });
+        }
+
+        function goBack() {
+            // Volta para a página inicial
+            window.location.href = 'index.html'; // Altere para o caminho correto da sua página inicial
         }
     </script>
 </head>
@@ -121,6 +125,8 @@
     </div>
     <div id="itemList"></div>
     <div id="finalizeList"></div>
-    <button class="button" onclick="copyToClipboard()">Copiar Lista para WhatsApp</button>
+    <button class="button" onclick="finalizeList()">Finalizar Lista</button>
+    <button class="button" onclick="shareViaWhatsApp()">Compartilhar pelo WhatsApp</button>
+    <button class="button" onclick="goBack()">Voltar à Página Inicial</button>
 </body>
 </html>
