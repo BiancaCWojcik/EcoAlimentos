@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoAlimentos - Lista de Compras</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+            padding: 50px;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            display: inline-block;
+            font-size: 16px;
+            margin: 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        .form-container {
+            margin: 20px 0;
+            display: inline-block;
+            text-align: left;
+        }
+        input[type="text"], input[type="number"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #itemList {
+            margin-top: 20px;
+            text-align: left;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        #finalizeList {
+            margin-top: 20px;
+            font-weight: bold;
+            display: none;
+        }
+    </style>
+    <script>
+        let itemList = [];
+        
+        function addItem() {
+            const itemName = document.getElementById("itemName").value;
+            const itemPrice = parseFloat(document.getElementById("itemPrice").value);
+            const itemQuantity = parseInt(document.getElementById("itemQuantity").value);
+
+            if (itemName && itemPrice && itemQuantity) {
+                itemList.push({ name: itemName, price: itemPrice, quantity: itemQuantity });
+                document.getElementById("itemName").value = '';
+                document.getElementById("itemPrice").value = '';
+                document.getElementById("itemQuantity").value = '';
+                displayItems();
+            } else {
+                alert("Por favor, preencha todos os campos.");
+            }
+        }
+
+        function displayItems() {
+            const itemListDiv = document.getElementById("itemList");
+            itemListDiv.innerHTML = "";
+            let totalCost = 0;
+
+            itemList.forEach(item => {
+                totalCost += item.price * item.quantity;
+                itemListDiv.innerHTML += `<p>${item.name} - R$ ${item.price.toFixed(2)} (Quantidade: ${item.quantity})</p>`;
+            });
+            itemListDiv.innerHTML += `<p>Total Estimado: R$ ${totalCost.toFixed(2)}</p>`;
+            document.getElementById("finalizeList").style.display = 'block';
+        }
+
+        function finalizeList() {
+            const finalizeDiv = document.getElementById("finalizeList");
+            finalizeDiv.innerHTML = "<h3>Lista de Compras:</h3>";
+            itemList.forEach(item => {
+                finalizeDiv.innerHTML += `<p>${item.name} - R$ ${item.price.toFixed(2)} (Quantidade: ${item.quantity})</p>`;
+            });
+            finalizeDiv.innerHTML += `<p><strong>Total: R$ ${(itemList.reduce((sum, item) => sum + (item.price * item.quantity), 0)).toFixed(2)}</strong></p>`;
+        }
+    </script>
+</head>
+<body>
+    <h1>Lista de Compras</h1>
+    <div class="form-container">
+        <input type="text" id="itemName" placeholder="Nome do Item" required>
+        <input type="number" id="itemPrice" placeholder="Preço Unitário (R$)" step="0.01" required>
+        <input type="number" id="itemQuantity" placeholder="Quantidade" required>
+        <button class="button" onclick="addItem()">Adicionar Item</button>
+    </div>
+    <div id="itemList"></div>
+    <div id="finalizeList"></div>
+</body>
+</html>
