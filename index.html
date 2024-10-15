@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boas Vindas</title>
+    <title>Reaproveitamento de Alimentos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,81 +11,126 @@
             padding: 20px;
             background-color: #f4f4f4;
         }
-        h1 {
+        header {
             text-align: center;
+            margin-bottom: 20px;
         }
-        button {
-            display: block;
-            margin: 10px auto;
+        nav {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        nav button {
+            margin: 0 10px;
             padding: 10px 20px;
-            font-size: 16px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
             cursor: pointer;
         }
-        .section {
-            display: none;
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        nav button:hover {
+            background-color: #218838;
         }
-        .message {
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
             text-align: center;
-            margin: 20px 0;
-            font-weight: bold;
-            color: #d9534f; /* Cor de destaque */
+        }
+        ul, ol {
+            margin-left: 20px;
+        }
+        .recipe {
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
-    <h1>Bem-vindo ao Reaproveitamento de Alimentos!</h1>
-    <button onclick="showSection('shopping')">Calcular Valor das Minhas Compras</button>
-    <button onclick="showSection('recipes')">Ver Receitas de Reaproveitamento de Alimentos</button>
+    <header>
+        <h1>Reaproveitamento de Alimentos</h1>
+        <p>Bem-vindo ao nosso guia de receitas e dicas para reaproveitamento de alimentos!</p>
+    </header>
 
-    <div class="message">
-        Evite desperdícios, compre só o necessário!
+    <nav>
+        <button onclick="document.getElementById('welcome').style.display='none'; document.getElementById('shopping-list').style.display='block';">Lista de Compras</button>
+        <button onclick="document.getElementById('welcome').style.display='none'; document.getElementById('recipes').style.display='block';">Receitas</button>
+    </nav>
+
+    <div id="welcome" class="container">
+        <h2>Instruções</h2>
+        <p>Use os botões acima para acessar a lista de compras e as receitas de reaproveitamento de alimentos.</p>
     </div>
 
-    <div id="shopping" class="section">
+    <div id="shopping-list" class="container" style="display: none;">
         <h2>Lista de Compras</h2>
-        <p>Digite os itens e seus preços:</p>
         <ul>
-            <li>Arroz - R$ 5,00</li>
-            <li>Feijão - R$ 4,00</li>
-            <li>Frango - R$ 15,00</li>
-            <li>Batata - R$ 3,00</li>
-            <li>Cenoura - R$ 2,00</li>
-            <li>Tomate - R$ 4,00</li>
-            <li>Cebola - R$ 2,50</li>
-            <li>Pimentão - R$ 3,50</li>
-            <li>Alface - R$ 2,00</li>
-            <li>Queijo - R$ 10,00</li>
-            <li>Leite - R$ 4,50</li>
-            <li>Ovos - R$ 6,00</li>
-            <li>Farinha - R$ 3,00</li>
-            <li>Azeite - R$ 15,00</li>
-            <li>Salsicha - R$ 7,00</li>
+            <li>Arroz</li>
+            <li>Feijão</li>
+            <li>Legumes variados</li>
+            <li>Frutas (bananas, maçãs, etc.)</li>
+            <li>Ovos</li>
+            <li>Farinha de trigo</li>
+            <li>Açúcar</li>
+            <li>Óleo de cozinha</li>
+            <li>Sal</li>
+            <li>Pimenta</li>
+            <li>Queijo</li>
+            <li>Carne (ou proteínas vegetais)</li>
+            <li>Leite</li>
+            <li>Temperos (alho, cebola, ervas)</li>
+            <li>Fubá ou aveia</li>
         </ul>
+        <button onclick="document.getElementById('shopping-list').style.display='none'; document.getElementById('welcome').style.display='block';">Voltar</button>
     </div>
 
-    <div id="recipes" class="section">
-        <h2>Receitas de Reaproveitamento de Alimentos</h2>
+    <div id="recipes" class="container" style="display: none;">
+        <h2>Receitas de Reaproveitamento</h2>
+
+        <!-- Receitas -->
+        <div class="recipe">
+            <h3>Pão de Bananas Maduras</h3>
+            <p><strong>Ingredientes:</strong></p>
+            <ul>
+                <li>3 bananas maduras</li>
+                <li>2 xícaras de farinha de trigo</li>
+                <li>1 xícara de açúcar</li>
+                <li>1/2 xícara de óleo</li>
+                <li>2 ovos</li>
+                <li>1 colher de sopa de fermento em pó</li>
+                <li>Canela a gosto</li>
+            </ul>
+            <p><strong>Modo de Preparo:</strong></p>
+            <ol>
+                <li>Preaqueça o forno a 180°C.</li>
+                <li>No liquidificador, bata as bananas, açúcar, óleo e ovos até obter uma mistura homogênea.</li>
+                <li>Em uma tigela, misture a farinha, fermento e canela.</li>
+                <li>Adicione a mistura do liquidificador aos ingredientes secos e mexa bem.</li>
+                <li>Despeje em uma forma untada e leve ao forno por cerca de 40 minutos.</li>
+            </ol>
+        </div>
 
         <div class="recipe">
             <h3>Panquecas de Sobras</h3>
             <p><strong>Ingredientes:</strong></p>
             <ul>
-                <li>2 xícaras de sobras de carne ou legumes</li>
-                <li>1 xícara de farinha de trigo</li>
-                <li>1 xícara de leite</li>
+                <li>1 xícara de sobras de arroz</li>
                 <li>2 ovos</li>
+                <li>1/2 xícara de leite</li>
+                <li>1 xícara de farinha de trigo</li>
                 <li>Sal e pimenta a gosto</li>
             </ul>
             <p><strong>Modo de Preparo:</strong></p>
             <ol>
-                <li>Em uma tigela, misture a farinha, leite, ovos, sal e pimenta até obter uma massa homogênea.</li>
-                <li>Em uma frigideira untada, despeje uma concha da massa e cozinhe por 2 minutos de cada lado.</li>
-                <li>Recheie as panquecas com as sobras de carne ou legumes e sirva.</li>
+                <li>Em uma tigela, misture todos os ingredientes até obter uma massa homogênea.</li>
+                <li>Aqueça uma frigideira untada e despeje uma concha da massa, cozinhando por 2 minutos de cada lado.</li>
+                <li>Recheie com o que sobrar na geladeira.</li>
             </ol>
         </div>
 
@@ -115,182 +160,131 @@
             <h3>Salada de Pão Velho</h3>
             <p><strong>Ingredientes:</strong></p>
             <ul>
-                <li>4 fatias de pão velho (ou sobras de pão)</li>
-                <li>1 tomate picado</li>
+                <li>4 fatias de pão amanhecido</li>
+                <li>2 tomates picados</li>
                 <li>1/2 cebola picada</li>
-                <li>1/2 pimentão picado</li>
-                <li>Cheiro verde a gosto</li>
-                <li>Azeite, sal e vinagre a gosto</li>
-            </ul>
-            <p><strong>Modo de Preparo:</strong></p>
-            <ol>
-                <li>Corte o pão em cubos e coloque em uma tigela.</li>
-                <li>Adicione o tomate, cebola, pimentão e cheiro verde.</li>
-                <li>Regue com azeite, sal e vinagre, e misture bem.</li>
-                <li>Deixe descansar por 10 minutos antes de servir.</li>
-            </ol>
-        </div>
-
-        <div class="recipe">
-            <h3>Sopa de Legumes</h3>
-            <p><strong>Ingredientes:</strong></p>
-            <ul>
-                <li>2 xícaras de sobras de legumes (batata, cenoura, abobrinha)</li>
-                <li>1 litro de caldo de legumes</li>
-                <li>1 cebola picada</li>
-                <li>2 dentes de alho picados</li>
+                <li>1/2 xícara de azeitonas</li>
                 <li>Azeite, sal e pimenta a gosto</li>
             </ul>
             <p><strong>Modo de Preparo:</strong></p>
             <ol>
-                <li>Refogue a cebola e o alho em azeite até dourar.</li>
-                <li>Adicione os legumes e o caldo de legumes, e cozinhe por 20 minutos.</li>
-                <li>Tempere com sal e pimenta a gosto antes de servir.</li>
+                <li>Corte o pão em cubos e misture com os outros ingredientes.</li>
+                <li>Tempere com azeite, sal e pimenta.</li>
+                <li>Deixe marinar por 30 minutos antes de servir.</li>
             </ol>
         </div>
 
         <div class="recipe">
-            <h3>Pão de Queijo com Sobras</h3>
+            <h3>Frutas Carameladas</h3>
             <p><strong>Ingredientes:</strong></p>
             <ul>
-                <li>1 xícara de sobras de queijo ralado</li>
-                <li>2 xícaras de polvilho azedo</li>
-                <li>2 ovos</li>
-                <li>1/2 xícara de leite</li>
-                <li>1/4 xícara de óleo</li>
-                <li>Sal a gosto</li>
+                <li>Frutas maduras (banana, maçã, etc.)</li>
+                <li>1 xícara de açúcar</li>
+                <li>1 colher de sopa de manteiga</li>
+                <li>Canela a gosto</li>
             </ul>
             <p><strong>Modo de Preparo:</strong></p>
             <ol>
-                <li>Preaqueça o forno a 180°C.</li>
-                <li>Misture todos os ingredientes até obter uma massa homogênea.</li>
-                <li>Faça bolinhas e coloque em uma forma untada.</li>
-                <li>Asse por 20-25 minutos ou até dourar.</li>
+                <li>Corte as frutas em fatias.</li>
+                <li>Em uma frigideira, derreta a manteiga e adicione o açúcar até formar um caramelo.</li>
+                <li>Adicione as frutas e cozinhe até que fiquem macias.</li>
+                <li>Polvilhe com canela antes de servir.</li>
             </ol>
         </div>
 
         <div class="recipe">
-            <h3>Macarrão ao Forno com Restos</h3>
+            <h3>Sopa de Legumes com Restos</h3>
             <p><strong>Ingredientes:</strong></p>
             <ul>
-                <li>2 xícaras de sobras de macarrão cozido</li>
-                <li>1 xícara de molho de tomate</li>
-                <li>1 xícara de queijo ralado</li>
-                <li>1/2 xícara de presunto ou carne moída (opcional)</li>
-                <li>Temperos a gosto</li>
-            </ul>
-            <p><strong>Modo de Preparo:</strong></p>
-            <ol>
-                <li>Preaqueça o forno a 180°C.</li>
-                <li>Em uma tigela, misture o macarrão, molho de tomate, queijo e presunto.</li>
-                <li>Coloque em uma forma untada e cubra com queijo ralado.</li>
-                <li>Asse por 30 minutos ou até o queijo derreter.</li>
-            </ol>
-        </div>
-
-        <div class="recipe">
-            <h3>Risoto de Arroz Velho</h3>
-            <p><strong>Ingredientes:</strong></p>
-            <ul>
-                <li>2 xícaras de arroz cozido</li>
-                <li>1 litro de caldo de legumes</li>
-                <li>1 cebola picada</li>
-                <li>1/2 xícara de vinho branco (opcional)</li>
-                <li>Queijo ralado a gosto</li>
-                <li>Sal e pimenta a gosto</li>
-            </ul>
-            <p><strong>Modo de Preparo:</strong></p>
-            <ol>
-                <li>Refogue a cebola até dourar.</li>
-                <li>Adicione o arroz e misture bem.</li>
-                <li>Adicione o vinho e o caldo aos poucos, mexendo sempre.</li>
-                <li>Finalize com queijo, sal e pimenta antes de servir.</li>
-            </ol>
-        </div>
-
-        <div class="recipe">
-            <h3>Creme de Abóbora com Sopa</h3>
-            <p><strong>Ingredientes:</strong></p>
-            <ul>
-                <li>2 xícaras de abóbora cozida</li>
-                <li>1 litro de caldo de galinha</li>
+                <li>Restos de legumes cozidos</li>
+                <li>1 litro de água</li>
                 <li>1 cebola picada</li>
                 <li>2 dentes de alho picados</li>
                 <li>Sal e pimenta a gosto</li>
             </ul>
             <p><strong>Modo de Preparo:</strong></p>
             <ol>
-                <li>Refogue a cebola e o alho em azeite até dourar.</li>
-                <li>Adicione a abóbora e o caldo de galinha, e cozinhe por 15 minutos.</li>
-                <li>Bata tudo no liquidificador e tempere a gosto.</li>
+                <li>Em uma panela, refogue a cebola e o alho.</li>
+                <li>Adicione os restos de legumes e a água.</li>
+                <li>Cozinhe por 20 minutos e tempere a gosto.</li>
             </ol>
         </div>
 
         <div class="recipe">
-            <h3>Fritada de Legumes</h3>
+            <h3>Arroz de Forno com Sobras</h3>
             <p><strong>Ingredientes:</strong></p>
             <ul>
-                <li>2 xícaras de sobras de legumes picados</li>
-                <li>3 ovos batidos</li>
-                <li>Sal e pimenta a gosto</li>
-                <li>Azeite para untar</li>
-            </ul>
-            <p><strong>Modo de Preparo:</strong></p>
-            <ol>
-                <li>Em uma frigideira untada, coloque os legumes e refogue por alguns minutos.</li>
-                <li>Despeje os ovos batidos por cima e cozinhe até firmar.</li>
-                <li>Vire e cozinhe do outro lado antes de servir.</li>
-            </ol>
-        </div>
-
-        <div class="recipe">
-            <h3>Quiche de Legumes com Sobras</h3>
-            <p><strong>Ingredientes:</strong></p>
-            <ul>
-                <li>1 base de massa (comprada ou feita em casa)</li>
-                <li>2 xícaras de sobras de legumes</li>
-                <li>3 ovos</li>
-                <li>1 xícara de leite</li>
-                <li>Queijo a gosto</li>
+                <li>2 xícaras de arroz cozido</li>
+                <li>1 xícara de sobras de carne ou legumes</li>
+                <li>1/2 xícara de queijo ralado</li>
+                <li>1/2 xícara de creme de leite</li>
                 <li>Sal e pimenta a gosto</li>
             </ul>
             <p><strong>Modo de Preparo:</strong></p>
             <ol>
                 <li>Preaqueça o forno a 180°C.</li>
-                <li>Em uma tigela, misture os ovos, leite, sal e pimenta.</li>
-                <li>Adicione os legumes e misture bem.</li>
-                <li>Despeje sobre a massa e cubra com queijo.</li>
-                <li>Asse por cerca de 40 minutos ou até dourar.</li>
+                <li>Misture todos os ingredientes em uma tigela.</li>
+                <li>Despeje em um refratário untado e leve ao forno por 30 minutos.</li>
             </ol>
         </div>
 
         <div class="recipe">
-            <h3>Docinhos de Frutas Maduras</h3>
+            <h3>Docinho de Leite Condensado e Sobras de Bolo</h3>
             <p><strong>Ingredientes:</strong></p>
             <ul>
-                <li>2 xícaras de sobras de frutas maduras</li>
-                <li>1 xícara de açúcar</li>
-                <li>1/2 xícara de coco ralado</li>
-                <li>2 colheres de sopa de manteiga</li>
+                <li>1 lata de leite condensado</li>
+                <li>Restos de bolo esmigalhado</li>
+                <li>Chocolate granulado para decorar</li>
             </ul>
             <p><strong>Modo de Preparo:</strong></p>
             <ol>
-                <li>Em uma panela, misture todos os ingredientes e cozinhe em fogo baixo até desgrudar do fundo.</li>
-                <li>Deixe esfriar e faça bolinhas.</li>
-                <li>Passe no coco ralado e sirva.</li>
+                <li>Em uma panela, misture o leite condensado com os restos de bolo até formar uma massa.</li>
+                <li>Deixe esfriar e enrole em bolinhas.</li>
+                <li>Passe no chocolate granulado e sirva.</li>
             </ol>
         </div>
 
-    </div>
+        <div class="recipe">
+            <h3>Quiche de Legumes</h3>
+            <p><strong>Ingredientes:</strong></p>
+            <ul>
+                <li>1 massa de torta (pode ser de sobra)</li>
+                <li>2 xícaras de legumes variados (sobras)</li>
+                <li>3 ovos</li>
+                <li>1 xícara de creme de leite</li>
+                <li>Sal e pimenta a gosto</li>
+            </ul>
+            <p><strong>Modo de Preparo:</strong></p>
+            <ol>
+                <li>Preaqueça o forno a 180°C.</li>
+                <li>Em uma tigela, bata os ovos com o creme de leite e tempere.</li>
+                <li>Misture os legumes e despeje na massa de torta.</li>
+                <li>Asse por 30 minutos ou até dourar.</li>
+            </ol>
+        </div>
 
-    <script>
-        function showSection(section) {
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(sec => {
-                sec.style.display = 'none';
-            });
-            document.getElementById(section).style.display = 'block';
-        }
-    </script>
+        <div class="recipe">
+            <h3>Bolo de Cenoura com Casca</h3>
+            <p><strong>Ingredientes:</strong></p>
+            <ul>
+                <li>2 cenouras (com casca, bem lavadas)</li>
+                <li>2 xícaras de farinha de trigo</li>
+                <li>1 xícara de açúcar</li>
+                <li>1/2 xícara de óleo</li>
+                <li>3 ovos</li>
+                <li>1 colher de sopa de fermento em pó</li>
+            </ul>
+            <p><strong>Modo de Preparo:</strong></p>
+            <ol>
+                <li>Preaqueça o forno a 180°C.</li>
+                <li>No liquidificador, bata as cenouras, açúcar, óleo e ovos até ficar homogêneo.</li>
+                <li>Em uma tigela, misture a farinha e o fermento.</li>
+                <li>Adicione a mistura do liquidificador e mexa bem.</li>
+                <li>Despeje em uma forma untada e leve ao forno por cerca de 40 minutos.</li>
+            </ol>
+        </div>
+
+        <button onclick="document.getElementById('recipes').style.display='none'; document.getElementById('welcome').style.display='block';">Voltar</button>
+    </div>
 </body>
 </html>
