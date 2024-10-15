@@ -14,26 +14,24 @@
         h1 {
             color: #4CAF50;
         }
+        h2 {
+            color: #4CAF50;
+        }
         .button {
             background-color: #4CAF50;
             color: white;
-            padding: 15px 32px;
-            text-align: center;
-            display: inline-block;
-            font-size: 16px;
+            padding: 10px 20px;
             margin: 20px;
+            text-decoration: none;
+            border-radius: 5px;
             cursor: pointer;
             border: none;
-            border-radius: 5px;
-            text-decoration: none;
         }
         .button:hover {
             background-color: #45a049;
         }
-        .form-container {
-            margin: 20px 0;
-            display: inline-block;
-            text-align: left;
+        .hidden {
+            display: none;
         }
         input[type="text"], input[type="number"] {
             width: 80%;
@@ -50,10 +48,6 @@
             border-radius: 5px;
             background-color: #fff;
         }
-        #result {
-            margin-top: 20px;
-            font-weight: bold;
-        }
         .recipe {
             margin: 20px 0;
             text-align: left;
@@ -61,6 +55,13 @@
     </style>
     <script>
         let itemList = [];
+
+        function showSection(section) {
+            const sections = document.querySelectorAll(".section");
+            sections.forEach(s => s.classList.add("hidden"));
+            document.getElementById(section).classList.remove("hidden");
+        }
+
         function addItem() {
             const itemName = document.getElementById("itemName").value;
             const itemPrice = parseFloat(document.getElementById("itemPrice").value);
@@ -86,28 +87,30 @@
                 totalCost += item.price * item.quantity;
                 itemListDiv.innerHTML += `<p>${item.name}: R$ ${item.price.toFixed(2)} x ${item.quantity} = R$ ${(item.price * item.quantity).toFixed(2)}</p>`;
             });
-            itemListDiv.innerHTML += `<p>Total Estimado: R$ ${totalCost.toFixed(2)}</p>`;
+            itemListDiv.innerHTML += `<p><strong>Total Estimado: R$ ${totalCost.toFixed(2)}</strong></p>`;
         }
     </script>
 </head>
 <body>
     <h1>Bem-vindo ao EcoAlimentos!</h1>
     <p>O que você gostaria de fazer?</p>
-    <a href="#compras" class="button" onclick="showSection('compras')">Calcular Valor das Minhas Compras</a>
-    <a href="#receitas" class="button" onclick="showSection('receitas')">Ver Receitas de Reaproveitamento de Alimentos</a>
+    <button class="button" onclick="showSection('compras')">Calcular Valor das Minhas Compras</button>
+    <button class="button" onclick="showSection('receitas')">Ver Receitas de Reaproveitamento de Alimentos</button>
 
-    <div id="compras" style="display:none;">
+    <div id="compras" class="section hidden">
         <h2>Lista de Compras</h2>
-        <div class="form-container">
+        <div>
             <input type="text" id="itemName" placeholder="Nome do Item" required>
             <input type="number" id="itemPrice" placeholder="Preço Unitário (R$)" step="0.01" required>
             <input type="number" id="itemQuantity" placeholder="Quantidade" required>
             <button class="button" onclick="addItem()">Adicionar Item</button>
         </div>
         <div id="itemList"></div>
+        <br>
+        <button class="button" onclick="showSection('welcome')">Voltar à Página Inicial</button>
     </div>
 
-    <div id="receitas" style="display:none;">
+    <div id="receitas" class="section hidden">
         <h2>Receitas de Reaproveitamento de Alimentos</h2>
         <div class="recipe">
             <h3>Sopa de Legumes</h3>
@@ -146,37 +149,18 @@
         </div>
         <div class="recipe">
             <h3>Pizza de Pão</h3>
-            <p><strong>Ingredientes:</strong> Sobras de pão, molho de tomate, queijo, ingredientes a gosto.</p>
-            <p><strong>Modo de Preparo:</strong> Cubra o pão com o molho, queijo e ingredientes, leve ao forno até o queijo derreter.</p>
+            <p><strong>Ingredientes:</strong> Pão amanhecido, molho de tomate, queijo, presunto, azeitonas, orégano.</p>
+            <p><strong>Modo de Preparo:</strong> Cubra o pão com os ingredientes e leve ao forno até o queijo derreter.</p>
         </div>
-        <div class="recipe">
-            <h3>Bolinho de Arroz</h3>
-            <p><strong>Ingredientes:</strong> Sobras de arroz, ovos, farinha de trigo, temperos.</p>
-            <p><strong>Modo de Preparo:</strong> Misture todos os ingredientes, modele em bolinhos e frite até dourar.</p>
-        </div>
-        <div class="recipe">
-            <h3>Bolo de Casca de Banana</h3>
-            <p><strong>Ingredientes:</strong> Cascas de banana, açúcar, ovos, farinha.</p>
-            <p><strong>Modo de Preparo:</strong> Bata as cascas no liquidificador, misture com os outros ingredientes e asse.</p>
-        </div>
-        <div class="recipe">
-            <h3>Farofa de Sobras</h3>
-            <p><strong>Ingredientes:</strong> Sobras de arroz ou farofa pronta, temperos a gosto.</p>
-            <p><strong>Modo de Preparo:</strong> Refogue cebola e alho, adicione as sobras e misture bem.</p>
-        </div>
-        <div class="recipe">
-            <h3>Creme de Legumes</h3>
-            <p><strong>Ingredientes:</strong> Sobras de legumes, leite, temperos.</p>
-            <p><strong>Modo de Preparo:</strong> Cozinhe os legumes, bata no liquidificador com o leite e aqueça antes de servir.</p>
-        </div>
+        <br>
+        <button class="button" onclick="showSection('welcome')">Voltar à Página Inicial</button>
     </div>
 
-    <script>
-        function showSection(section) {
-            document.getElementById("compras").style.display = "none";
-            document.getElementById("receitas").style.display = "none";
-            document.getElementById(section).style.display = "block";
-        }
-    </script>
+    <div id="welcome" class="section">
+        <h2>Bem-vindo ao EcoAlimentos!</h2>
+        <p>O que você gostaria de fazer?</p>
+        <button class="button" onclick="showSection('compras')">Calcular Valor das Minhas Compras</button>
+        <button class="button" onclick="showSection('receitas')">Ver Receitas de Reaproveitamento de Alimentos</button>
+    </div>
 </body>
 </html>
