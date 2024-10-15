@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boas Vindas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f8ff;
+            padding: 20px;
+        }
+        h1 {
+            color: #4CAF50;
+        }
+        .button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            display: inline-block;
+            font-size: 16px;
+            margin: 20px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #45a049;
+        }
+        #recipes-page, #shopping-page {
+            display: none;
+            margin-top: 20px;
+        }
+        .recipe, .shopping-list {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .recipe img, .shopping-list img {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 8px;
+        }
+        .recipe h2, .shopping-list h2 {
+            color: #4CAF50;
+        }
+        .back-button {
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        function showRecipes() {
+            document.getElementById("welcome-page").style.display = "none";
+            document.getElementById("recipes-page").style.display = "block";
+        }
+
+        function showShopping() {
+            document.getElementById("welcome-page").style.display = "none";
+            document.getElementById("shopping-page").style.display = "block";
+        }
+
+        function goBack(page) {
+            document.getElementById("welcome-page").style.display = page === 'welcome' ? "block" : "none";
+            document.getElementById("recipes-page").style.display = page === 'recipes' ? "block" : "none";
+            document.getElementById("shopping-page").style.display = page === 'shopping' ? "block" : "none";
+        }
+
+        function calculateTotal() {
+            const items = document.getElementsByClassName("item");
+            let total = 0;
+
+            for (let i = 0; i < items.length; i++) {
+                const price = parseFloat(items[i].value) || 0;
+                total += price;
+            }
+            document.getElementById("total-price").innerText = "Total: R$ " + total.toFixed(2);
+        }
+    </script>
+</head>
+<body>
+
+    <div id="welcome-page">
+        <h1>Bem-vindo!</h1>
+        <p>O que você gostaria de fazer?</p>
+        <a href="javascript:void(0)" class="button" onclick="showShopping()">Calcular Valor das Minhas Compras</a>
+        <a href="javascript:void(0)" class="button" onclick="showRecipes()">Ver Receitas de Reaproveitamento de Alimentos</a>
+    </div>
+
+    <div id="recipes-page">
+        <h1>Receitas de Reaproveitamento de Alimentos</h1>
+        <div class="recipe">
+            <img src="https://www.tudogostoso.com.br/uploads/receitas/41876/capa.jpg" alt="Sopa de Legumes Restantes">
+            <h2>Sopa de Legumes Restantes</h2>
+            <p>Use qualquer vegetal que sobrou na geladeira. Refogue cebola e alho, adicione os legumes picados, cubra com caldo e cozinhe até que fiquem macios. Tempere a gosto.</p>
+        </div>
+        <div class="recipe">
+            <img src="https://www.tudogostoso.com.br/uploads/receitas/225501/capa.jpg" alt="Bolo de Casca de Banana">
+            <h2>Bolo de Casca de Banana</h2>
+            <p>Aproveite as cascas de banana! Bata 3 cascas de banana com 2 ovos, 1 xícara de açúcar, 1/2 xícara de óleo e 2 xícaras de farinha. Asse a 180°C por 30-40 minutos.</p>
+        </div>
+        <div class="recipe">
+            <img src="https://www.tudogostoso.com.br/uploads/receitas/20990/capa.jpg" alt="Salada de Frutas">
+            <h2>Salada de Frutas com Frutas Que Sobram</h2>
+            <p>Reúna as frutas que estão passando do ponto. Corte em pedaços e misture com iogurte natural e mel. Adicione granola por cima para um toque crocante.</p>
+        </div>
+        <div class="recipe">
+            <img src="https://www.tudogostoso.com.br/uploads/receitas/176857/capa.jpg" alt="Arroz de Sobras">
+            <h2>Arroz de Sobras</h2>
+            <p>Reaproveite arroz cozido. Refogue cebola e alho, adicione o arroz e misture com qualquer proteína (frango, carne ou tofu) e legumes que tiver. Tempere a gosto.</p>
+        </div>
+        <div class="recipe">
+            <img src="https://www.tudogostoso.com.br/uploads/receitas/24194/capa.jpg" alt="Pão de Restos de Pão">
+            <h2>Pão Caseiro de Restos de Pão</h2>
+            <p>Rale ou processe o pão velho até virar migalhas. Misture com ovos, leite e temperos. Modele em formas e asse a 180°C até dourar.</p>
+        </div>
+        <div class="recipe">
+            <img src="https://www.tudogostoso.com.br/uploads/receitas/178943/capa.jpg" alt="Creme de Legumes">
+            <h2>Creme de Legumes</h2>
+            <p>Utilize restos de legumes cozidos. Bata no liquidificador com caldo de galinha ou vegetal e aqueça até ferver. Sirva com um fio de azeite.</p>
+        </div>
+        <div class="recipe">
+            <img src="https://www.tudogostoso.com.br/uploads/receitas/175067/capa.jpg" alt="Frittata de Legumes">
+            <h2>Frittata de Legumes</h2>
+            <p>Reaproveite os legumes que sobraram da refeição anterior. Misture com ovos batidos e cozinhe na frigideira até dourar.</p>
+        </div>
+        <div class="recipe">
+            <img src="https://www.tudogostoso.com.br/uploads/receitas/14274/capa.jpg" alt="Pasta de Berinjela">
+            <h2>Pasta de Berinjela</h2>
+            <p>Use berinjelas que estão passando do ponto. Asse, amasse e misture com azeite, alho e temperos a gosto. Sirva com torradas.</p>
+        </div>
+        <div class="recipe">
+            <img src="https://www.tudogostoso.com.br/uploads/receitas/13061/capa.jpg" alt="Panquecas de Restos">
+            <h2>Panquecas de Restos</h2>
+            <p>Use sobras de purê de batata ou legumes. Misture com farinha e ovos, faça panquecas e frite até dourar.</p>
+        </div>
+        <div class="recipe">
+            <img src="https://www.tudogostoso.com.br/uploads/receitas/18876/capa.jpg" alt="Smoothie Verde">
+            <h2>Smoothie Verde com Frutas Passadas</h2>
+            <p>Use frutas maduras e folhas verdes. Bata tudo no liquidificador com água ou leite. Adicione mel a gosto.</p>
+        </div>
+        <div class="recipe">
+            <img src="https://www.tudogostoso.com.br/uploads/receitas/21809/capa.jpg" alt="Bolinho de Arroz">
+            <h2>Bolinho de Arroz</h2>
+            <p>Reaproveite arroz cozido e misture com queijo, temperos e ovos. Modele em bolinhos e frite até dourar.</p>
+        </div>
+        <div class="recipe">
+            <img src="https://www.tudogostoso.com.br/uploads/receitas/12345/capa.jpg" alt="Purê de Casca de Batata">
+            <h2>Purê de Casca de Batata</h2>
+            <p>Aproveite as cascas de batata. Cozinhe, amasse e misture com manteiga e leite para fazer um purê delicioso.</p>
+        </div>
+        <button class="back-button" onclick="goBack('welcome')">Voltar</button>
+    </div>
+
+    <div id="shopping-page">
+        <h1>Cálculo do Valor das Compras</h1>
+        <div class="shopping-list">
+            <h2>Lista de Compras</h2>
+            <input type="number" class="item" placeholder="Preço do Item 1" oninput="calculateTotal()">
+            <input type="number" class="item" placeholder="Preço do Item 2" oninput="calculateTotal()">
+            <input type="number" class="item" placeholder="Preço do Item 3" oninput="calculateTotal()">
+            <input type="number" class="item" placeholder="Preço do Item 4" oninput="calculateTotal()">
+            <input type="number" class="item" placeholder="Preço do Item 5" oninput="calculateTotal()">
+            <h3 id="total-price">Total: R$ 0.00</h3>
+        </div>
+        <button class="back-button" onclick="goBack('welcome')">Voltar</button>
+    </div>
+
+</body>
+</html>
