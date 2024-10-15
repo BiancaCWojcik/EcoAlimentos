@@ -3,306 +3,250 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Reaproveitamento de Alimentos</title>
+    <title>EcoAlimentos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f8f8;
-            margin: 0;
-            padding: 20px;
+            text-align: center;
+            background-color: #f0f8ff;
+            padding: 50px;
         }
         h1 {
             color: #4CAF50;
         }
-        .container {
-            max-width: 800px;
-            margin: auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-        }
-        button {
+        .button {
             background-color: #4CAF50;
             color: white;
-            padding: 10px 20px;
+            padding: 15px 32px;
+            text-align: center;
+            display: inline-block;
+            font-size: 16px;
+            margin: 20px;
+            cursor: pointer;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
-            margin: 10px 0;
+            text-decoration: none;
         }
-        button:hover {
+        .button:hover {
             background-color: #45a049;
         }
-        .section {
-            display: none;
-            margin-top: 20px;
+        .form-container {
+            margin: 20px 0;
+            display: inline-block;
+            text-align: left;
         }
-        .active {
-            display: block;
+        input[type="text"], input[type="number"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        #itemList {
+            margin-top: 20px;
+            text-align: left;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
         }
         .recipe {
-            margin-bottom: 20px;
+            margin: 20px 0;
             padding: 15px;
-            border: 1px solid #ddd;
+            border: 1px solid #ccc;
             border-radius: 5px;
-            background-color: #f9f9f9;
+            background-color: #fff;
+            text-align: left;
         }
-        ul {
-            padding-left: 20px;
+        .finalize-list {
+            margin-top: 20px;
+            display: none;
+            text-align: left;
         }
     </style>
     <script>
-        function showSection(section) {
-            const sections = document.querySelectorAll('.section');
-            sections.forEach(sec => {
-                sec.classList.remove('active');
-            });
-            document.getElementById(section).classList.add('active');
+        let itemList = [];
+        
+        function addItem() {
+            const itemName = document.getElementById("itemName").value;
+            const itemPrice = parseFloat(document.getElementById("itemPrice").value);
+            const itemQuantity = parseInt(document.getElementById("itemQuantity").value);
+
+            if (itemName && itemPrice && itemQuantity) {
+                itemList.push({ name: itemName, price: itemPrice, quantity: itemQuantity });
+                document.getElementById("itemName").value = '';
+                document.getElementById("itemPrice").value = '';
+                document.getElementById("itemQuantity").value = '';
+                displayItems();
+            } else {
+                alert("Por favor, preencha todos os campos.");
+            }
         }
+
+        function displayItems() {
+            const itemListDiv = document.getElementById("itemList");
+            itemListDiv.innerHTML = "";
+            let totalCost = 0;
+
+            itemList.forEach(item => {
+                totalCost += item.price * item.quantity;
+                itemListDiv.innerHTML += `<p>${item.name} - R$ ${item.price.toFixed(2)} (Quantidade: ${item.quantity})</p>`;
+            });
+            itemListDiv.innerHTML += `<p>Total Estimado: R$ ${totalCost.toFixed(2)}</p>`;
+            document.getElementById("finalizeButton").style.display = 'inline-block';
+        }
+
+        function finalizeList() {
+            const finalizeDiv = document.getElementById("finalizeList");
+            finalizeDiv.innerHTML = "<h3>Lista de Compras:</h3>";
+            itemList.forEach(item => {
+                finalizeDiv.innerHTML += `<p>${item.name} - R$ ${item.price.toFixed(2)} (Quantidade: ${item.quantity})</p>`;
+            });
+            finalizeDiv.innerHTML += `<p><strong>Total: R$ ${(itemList.reduce((sum, item) => sum + (item.price * item.quantity), 0)).toFixed(2)}</strong></p>`;
+            finalizeDiv.style.display = 'block';
+        }
+
+        function showSection(section) {
+            document.getElementById("compras").style.display = 'none';
+            document.getElementById("receitas").style.display = 'none';
+            document.getElementById(section).style.display = 'block';
+        }
+
+        // Exibe a seção de compras por padrão ao carregar a página
+        window.onload = function() {
+            showSection('compras');
+        };
     </script>
 </head>
 <body>
-    <div class="container">
-        <h1>Reaproveitamento de Alimentos</h1>
-        <button onclick="showSection('shoppingList')">Calcular Valor das Minhas Compras</button>
-        <button onclick="showSection('recipes')">Ver Receitas de Reaproveitamento de Alimentos</button>
+    <h1>Bem-vindo ao EcoAlimentos!</h1>
+    <p>O que você gostaria de fazer?</p>
+    <a href="#compras" class="button" onclick="showSection('compras')">Calcular Valor das Minhas Compras</a>
+    <a href="#receitas" class="button" onclick="showSection('receitas')">Ver Receitas de Reaproveitamento de Alimentos</a>
 
-        <div id="shoppingList" class="section active">
-            <h2>Lista de Compras</h2>
-            <p>Preencha as informações abaixo para calcular o valor das suas compras:</p>
-            <label for="item">Item:</label>
-            <input type="text" id="item" placeholder="Ex: Tomate">
-            <label for="quantity">Quantidade:</label>
-            <input type="number" id="quantity" placeholder="Ex: 2">
-            <label for="price">Preço Unitário:</label>
-            <input type="number" id="price" placeholder="Ex: 5.00" step="0.01">
-            <button onclick="calculateTotal()">Calcular</button>
-            <p id="totalPrice"></p>
+    <div id="compras" style="display:none;">
+        <h2>Lista de Compras</h2>
+        <div class="form-container">
+            <input type="text" id="itemName" placeholder="Nome do Item" required>
+            <input type="number" id="itemPrice" placeholder="Preço Unitário (R$)" step="0.01" required>
+            <input type="number" id="itemQuantity" placeholder="Quantidade" required>
+            <button class="button" onclick="addItem()">Adicionar Item</button>
+        </div>
+        <div id="itemList"></div>
+        <button id="finalizeButton" class="button" onclick="finalizeList()" style="display:none;">Finalizar Lista</button>
+        <div id="finalizeList" class="finalize-list"></div>
+    </div>
+
+    <div id="receitas" style="display:none;">
+        <h2>Receitas de Reaproveitamento de Alimentos</h2>
+        
+        <div class="recipe">
+            <h3>Sopa de Legumes</h3>
+            <p><strong>Ingredientes:</strong></p>
+            <ul>
+                <li>Sobras de legumes (como cenoura, abobrinha, batata, etc.)</li>
+                <li>1 cebola picada</li>
+                <li>2 dentes de alho picados</li>
+                <li>1 litro de água ou caldo de legumes</li>
+                <li>Sal e pimenta a gosto</li>
+                <li>Ervas frescas (como salsinha ou cebolinha) a gosto</li>
+            </ul>
+            <p><strong>Modo de Preparo:</strong></p>
+            <ol>
+                <li>Em uma panela, refogue a cebola e o alho até ficarem dourados.</li>
+                <li>Adicione os legumes picados e refogue por mais alguns minutos.</li>
+                <li>Adicione a água ou caldo de legumes e cozinhe até que os legumes estejam macios.</li>
+                <li>Tempere com sal, pimenta e ervas a gosto. Sirva quente.</li>
+            </ol>
         </div>
 
-        <div id="recipes" class="section">
-            <h2>Receitas de Reaproveitamento de Alimentos</h2>
-            <div class="recipe">
-                <h3>Panquecas de Sobras</h3>
-                <p><strong>Ingredientes:</strong></p>
-                <ul>
-                    <li>1 xícara de farinha de trigo</li>
-                    <li>1 xícara de leite</li>
-                    <li>2 ovos</li>
-                    <li>Sal e pimenta a gosto</li>
-                    <li>Sobras de carne ou legumes</li>
-                </ul>
-                <p><strong>Modo de Preparo:</strong></p>
-                <ol>
-                    <li>Em uma tigela, misture a farinha, leite, ovos, sal e pimenta até obter uma massa homogênea.</li>
-                    <li>Em uma frigideira untada, despeje uma concha da massa e cozinhe por 2 minutos de cada lado.</li>
-                    <li>Recheie as panquecas com as sobras de carne ou legumes e sirva.</li>
-                </ol>
-            </div>
-            <div class="recipe">
-                <h3>Bolo de Casca de Banana</h3>
-                <p><strong>Ingredientes:</strong></p>
-                <ul>
-                    <li>2 cascas de banana (bem lavadas e picadas)</li>
-                    <li>2 xícaras de farinha de trigo</li>
-                    <li>1 xícara de açúcar</li>
-                    <li>1/2 xícara de óleo</li>
-                    <li>3 ovos</li>
-                    <li>1 colher de sopa de fermento em pó</li>
-                    <li>Canela a gosto</li>
-                </ul>
-                <p><strong>Modo de Preparo:</strong></p>
-                <ol>
-                    <li>Preaqueça o forno a 180°C.</li>
-                    <li>No liquidificador, bata as cascas de banana, açúcar, óleo e ovos até obter uma mistura homogênea.</li>
-                    <li>Em uma tigela, misture a farinha, fermento e canela.</li>
-                    <li>Adicione a mistura do liquidificador aos ingredientes secos e mexa bem.</li>
-                    <li>Despeje a massa em uma forma untada e leve ao forno por cerca de 40 minutos ou até dourar.</li>
-                </ol>
-            </div>
-            <div class="recipe">
-                <h3>Salada de Pão Velho</h3>
-                <p><strong>Ingredientes:</strong></p>
-                <ul>
-                    <li>4 fatias de pão velho (ou sobras de pão)</li>
-                    <li>1 tomate picado</li>
-                    <li>1/2 cebola picada</li>
-                    <li>1/2 pimentão picado</li>
-                    <li>Cheiro verde a gosto</li>
-                    <li>Azeite, sal e vinagre a gosto</li>
-                </ul>
-                <p><strong>Modo de Preparo:</strong></p>
-                <ol>
-                    <li>Corte o pão em cubos e coloque em uma tigela.</li>
-                    <li>Adicione o tomate, cebola, pimentão e cheiro verde.</li>
-                    <li>Regue com azeite, sal e vinagre, e misture bem.</li>
-                    <li>Deixe descansar por 10 minutos antes de servir.</li>
-                </ol>
-            </div>
-
-            <!-- Novas receitas -->
-            <div class="recipe">
-                <h3>Sopa de Casca de Abóbora</h3>
-                <p><strong>Ingredientes:</strong></p>
-                <ul>
-                    <li>Casca de 1 abóbora</li>
-                    <li>1 cebola picada</li>
-                    <li>2 dentes de alho picados</li>
-                    <li>4 xícaras de caldo de legumes</li>
-                    <li>Sal e pimenta a gosto</li>
-                </ul>
-                <p><strong>Modo de Preparo:</strong></p>
-                <ol>
-                    <li>Refogue a cebola e o alho em uma panela até dourar.</li>
-                    <li>Adicione a casca de abóbora e o caldo de legumes, e cozinhe até a abóbora ficar macia.</li>
-                    <li>Processe a sopa até ficar cremosa, tempere e sirva quente.</li>
-                </ol>
-            </div>
-            <div class="recipe">
-                <h3>Bolinho de Arroz</h3>
-                <p><strong>Ingredientes:</strong></p>
-                <ul>
-                    <li>2 xícaras de arroz cozido</li>
-                    <li>1/2 xícara de queijo ralado</li>
-                    <li>2 ovos</li>
-                    <li>Farinha de trigo a gosto</li>
-                    <li>Sal e pimenta a gosto</li>
-                </ul>
-                <p><strong>Modo de Preparo:</strong></p>
-                <ol>
-                    <li>Em uma tigela, misture todos os ingredientes até formar uma massa.</li>
-                    <li>Modele bolinhos e frite em óleo quente até dourar.</li>
-                </ol>
-            </div>
-            <div class="recipe">
-                <h3>Chips de Casca de Batata</h3>
-                <p><strong>Ingredientes:</strong></p>
-                <ul>
-                    <li>Casca de 4 batatas</li>
-                    <li>Azeite a gosto</li>
-                    <li>Sal e temperos a gosto</li>
-                </ul>
-                <p><strong>Modo de Preparo:</strong></p>
-                <ol>
-                    <li>Preaqueça o forno a 200°C.</li>
-                    <li>Misture as cascas de batata com azeite e temperos.</li>
-                    <li>Espalhe em uma assadeira e asse por 15-20 minutos até ficarem crocantes.</li>
-                </ol>
-            </div>
-            <div class="recipe">
-                <h3>Pasta de Casca de Cenoura</h3>
-                <p><strong>Ingredientes:</strong></p>
-                <ul>
-                    <li>Casca de 4 cenouras</li>
-                    <li>1 colher de sopa de cream cheese</li>
-                    <li>Sal e pimenta a gosto</li>
-                </ul>
-                <p><strong>Modo de Preparo:</strong></p>
-                <ol>
-                    <li>Bata as cascas de cenoura no processador até ficarem bem picadas.</li>
-                    <li>Adicione o cream cheese, sal e pimenta, e misture bem.</li>
-                    <li>Sirva com torradas ou biscoitos.</li>
-                </ol>
-            </div>
-            <div class="recipe">
-                <h3>Omelete de Sobras de Legumes</h3>
-                <p><strong>Ingredientes:</strong></p>
-                <ul>
-                    <li>2 ovos</li>
-                    <li>Sobras de legumes cozidos (ex: brócolis, cenoura)</li>
-                    <li>Sal e pimenta a gosto</li>
-                </ul>
-                <p><strong>Modo de Preparo:</strong></p>
-                <ol>
-                    <li>Bata os ovos e tempere com sal e pimenta.</li>
-                    <li>Adicione os legumes e misture.</li>
-                    <li>Despeje em uma frigideira untada e cozinhe até firmar.</li>
-                </ol>
-            </div>
-            <div class="recipe">
-                <h3>Farofa de Sobras</h3>
-                <p><strong>Ingredientes:</strong></p>
-                <ul>
-                    <li>2 xícaras de farofa pronta</li>
-                    <li>Sobras de carnes ou legumes picados</li>
-                    <li>1 cebola picada</li>
-                    <li>Azeite a gosto</li>
-                </ul>
-                <p><strong>Modo de Preparo:</strong></p>
-                <ol>
-                    <li>Refogue a cebola no azeite até dourar.</li>
-                    <li>Adicione as sobras e cozinhe por alguns minutos.</li>
-                    <li>Junte a farofa e misture bem.</li>
-                </ol>
-            </div>
-            <div class="recipe">
-                <h3>Purê de Casca de Batata Doce</h3>
-                <p><strong>Ingredientes:</strong></p>
-                <ul>
-                    <li>Casca de 3 batatas-doces</li>
-                    <li>1/4 de xícara de leite</li>
-                    <li>Sal e manteiga a gosto</li>
-                </ul>
-                <p><strong>Modo de Preparo:</strong></p>
-                <ol>
-                    <li>Cozinhe as cascas em água até ficarem macias.</li>
-                    <li>Escorra e amasse com o leite, sal e manteiga.</li>
-                </ol>
-            </div>
-            <div class="recipe">
-                <h3>Biscoitos de Aveia com Frutas Secas</h3>
-                <p><strong>Ingredientes:</strong></p>
-                <ul>
-                    <li>1 xícara de aveia</li>
-                    <li>1/2 xícara de açúcar mascavo</li>
-                    <li>1/4 de xícara de manteiga derretida</li>
-                    <li>1/2 xícara de frutas secas (ex: uvas-passas)</li>
-                </ul>
-                <p><strong>Modo de Preparo:</strong></p>
-                <ol>
-                    <li>Preaqueça o forno a 180°C.</li>
-                    <li>Misture todos os ingredientes em uma tigela.</li>
-                    <li>Modele os biscoitos e coloque em uma assadeira.</li>
-                    <li>Asse por 15-20 minutos ou até dourar.</li>
-                </ol>
-            </div>
-            <div class="recipe">
-                <h3>Brigadeiro de Casca de Melancia</h3>
-                <p><strong>Ingredientes:</strong></p>
-                <ul>
-                    <li>Casca de 1/2 melancia</li>
-                    <li>1 xícara de açúcar</li>
-                    <li>1 colher de sopa de chocolate em pó</li>
-                    <li>Chocolate granulado para enrolar</li>
-                </ul>
-                <p><strong>Modo de Preparo:</strong></p>
-                <ol>
-                    <li>Retire a parte verde da casca da melancia e corte em cubos.</li>
-                    <li>Cozinhe os cubos com açúcar até ficarem macios.</li>
-                    <li>Adicione o chocolate em pó e misture bem.</li>
-                    <li>Deixe esfriar, modele os brigadeiros e passe no chocolate granulado.</li>
-                </ol>
-            </div>
-            <div class="recipe">
-                <h3>Risoto de Sobras</h3>
-                <p><strong>Ingredientes:</strong></p>
-                <ul>
-                    <li>1 xícara de arroz</li>
-                    <li>2 xícaras de caldo de legumes</li>
-                    <li>Sobras de carne ou legumes</li>
-                    <li>1 cebola picada</li>
-                    <li>Queijo ralado a gosto</li>
-                </ul>
-                <p><strong>Modo de Preparo:</strong></p>
-                <ol>
-                    <li>Refogue a cebola até dourar.</li>
-                    <li>Adicione o arroz e frite por alguns minutos.</li>
-                    <li>Vá adicionando o caldo aos poucos e mexendo até o arroz cozinhar.</li>
-                    <li>Finalize com as sobras e queijo ralado.</li>
-                </ol>
-            </div>
+        <div class="recipe">
+            <h3>Arroz de Forno</h3>
+            <p><strong>Ingredientes:</strong></p>
+            <ul>
+                <li>2 xícaras de sobras de arroz cozido</li>
+                <li>1 xícara de queijo ralado</li>
+                <li>1 xícara de presunto ou peito de frango desfiado</li>
+                <li>1/2 xícara de legumes cozidos (ervilha, milho, etc.)</li>
+                <li>2 ovos batidos</li>
+                <li>1/2 xícara de leite</li>
+                <li>Sal e pimenta a gosto</li>
+                <li>Queijo ralado para cobrir</li>
+            </ul>
+            <p><strong>Modo de Preparo:</strong></p>
+            <ol>
+                <li>Preaqueça o forno a 180°C.</li>
+                <li>Em uma tigela, misture o arroz, queijo, presunto, legumes, ovos e leite. Tempere com sal e pimenta.</li>
+                <li>Coloque a mistura em um refratário untado e cubra com queijo ralado.</li>
+                <li>Leve ao forno por aproximadamente 30 minutos ou até dourar.</li>
+            </ol>
         </div>
+
+        <div class="recipe">
+            <h3>Panquecas de Sobras</h3>
+            <p><strong>Ingredientes:</strong></p>
+            <ul>
+                <li>1 xícara de sobras de carne moída ou legumes cozidos</li>
+                <li>1 xícara de farinha de trigo</li>
+                <li>1 xícara de leite</li>
+                <li>2 ovos</li>
+                <li>Sal e pimenta a gosto</li>
+                <li>Óleo para untar a frigideira</li>
+            </ul>
+            <p><strong>Modo de Preparo:</strong></p>
+            <ol>
+                <li>Em uma tigela, misture a farinha, leite, ovos, sal e pimenta até obter uma massa homogênea.</li>
+                <li>Em uma frigideira untada, despeje uma concha da massa e cozinhe por 2 minutos de cada lado.</li>
+                <li>Recheie as panquecas com as sobras de carne ou legumes e sirva.</li>
+            </ol>
+        </div>
+
+        <div class="recipe">
+            <h3>Bolo de Casca de Banana</h3>
+            <p><strong>Ingredientes:</strong></p>
+            <ul>
+                <li>2 cascas de banana (bem lavadas e picadas)</li>
+                <li>2 xícaras de farinha de trigo</li>
+                <li>1 xícara de açúcar</li>
+                <li>1/2 xícara de óleo</li>
+                <li>3 ovos</li>
+                <li>1 colher de sopa de fermento em pó</li>
+                <li>Canela a gosto</li>
+            </ul>
+            <p><strong>Modo de Preparo:</strong></p>
+            <ol>
+                <li>Preaqueça o forno a 180°C.</li>
+                <li>No liquidificador, bata as cascas de banana, açúcar, óleo e ovos até obter uma mistura homogênea.</li>
+                <li>Em uma tigela, misture a farinha, fermento e canela.</li>
+                <li>Adicione a mistura do liquidificador aos ingredientes secos e mexa bem.</li>
+                <li>Despeje a massa em uma forma untada e leve ao forno por cerca de 40 minutos ou até dourar.</li>
+            </ol>
+        </div>
+
+        <div class="recipe">
+            <h3>Salada de Pão Velho</h3>
+            <p><strong>Ingredientes:</strong></p>
+            <ul>
+                <li>4 fatias de pão velho (ou sobras de pão)</li>
+                <li>1 tomate picado</li>
+                <li>1/2 cebola picada</li>
+                <li>1/2 pimentão picado</li>
+                <li>Cheiro verde a gosto</li>
+                <li>Azeite, sal e vinagre a gosto</li>
+            </ul>
+            <p><strong>Modo de Preparo:</strong></p>
+            <ol>
+                <li>Corte o pão em cubos e coloque em uma tigela.</li>
+                <li>Adicione o tomate, cebola, pimentão e cheiro verde.</li>
+                <li>Regue com azeite, sal e vinagre, e misture bem.</li>
+                <li>Deixe descansar por 10 minutos antes de servir.</li>
+            </ol>
+        </div>
+
     </div>
 </body>
 </html>
