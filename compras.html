@@ -55,6 +55,13 @@
             font-weight: bold;
             display: none;
         }
+        #finalizeButton {
+            display: none;
+        }
+        .alert {
+            color: red;
+            margin: 20px 0;
+        }
     </style>
     <script>
         let itemList = [];
@@ -86,6 +93,7 @@
             });
             itemListDiv.innerHTML += `<p>Total Estimado: R$ ${totalCost.toFixed(2)}</p>`;
             document.getElementById("finalizeList").style.display = 'block';
+            document.getElementById("finalizeButton").style.display = 'block';
         }
 
         function finalizeList() {
@@ -95,6 +103,11 @@
                 finalizeDiv.innerHTML += `<p>${item.name} - R$ ${item.price.toFixed(2)} (Quantidade: ${item.quantity})</p>`;
             });
             finalizeDiv.innerHTML += `<p><strong>Total: R$ ${(itemList.reduce((sum, item) => sum + (item.price * item.quantity), 0)).toFixed(2)}</strong></p>`;
+            
+            // Gerar link para WhatsApp
+            const message = encodeURIComponent(finalizeDiv.innerHTML);
+            const whatsappLink = `https://api.whatsapp.com/send?text=${message}`;
+            finalizeDiv.innerHTML += `<a href="${whatsappLink}" target="_blank" class="button">Enviar pelo WhatsApp</a>`;
         }
     </script>
 </head>
@@ -107,6 +120,9 @@
         <button class="button" onclick="addItem()">Adicionar Item</button>
     </div>
     <div id="itemList"></div>
+    <div class="alert">Evite desperdícios, compre somente o necessário!</div>
     <div id="finalizeList"></div>
+    <button id="finalizeButton" class="button" onclick="finalizeList()">Finalizar Lista</button>
+    <a href="index.html" class="button">Voltar para a página inicial</a>
 </body>
 </html>
