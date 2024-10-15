@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Boas Vindas</title>
+    <title>EcoAlimentos</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             text-align: center;
             background-color: #f0f8ff;
-            padding: 20px;
+            padding: 50px;
         }
         h1 {
             color: #4CAF50;
@@ -30,146 +30,153 @@
         .button:hover {
             background-color: #45a049;
         }
-        #recipes-page, #shopping-page {
-            display: none;
-            margin-top: 20px;
+        .form-container {
+            margin: 20px 0;
+            display: inline-block;
+            text-align: left;
         }
-        .recipe, .shopping-list {
-            background-color: #fff;
+        input[type="text"], input[type="number"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px 0;
             border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 20px;
-            margin: 15px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-radius: 5px;
         }
-        .recipe img, .shopping-list img {
-            width: 100%;
-            max-width: 300px;
-            border-radius: 8px;
-        }
-        .recipe h2, .shopping-list h2 {
-            color: #4CAF50;
-        }
-        .back-button {
+        #itemList {
             margin-top: 20px;
+            text-align: left;
+            border: 1px solid #ccc;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+        .recipe {
+            margin: 20px 0;
+            text-align: left;
         }
     </style>
     <script>
-        function showRecipes() {
-            document.getElementById("welcome-page").style.display = "none";
-            document.getElementById("recipes-page").style.display = "block";
-        }
+        let itemList = [];
+        function addItem() {
+            const itemName = document.getElementById("itemName").value;
+            const itemPrice = parseFloat(document.getElementById("itemPrice").value);
+            const itemQuantity = parseInt(document.getElementById("itemQuantity").value);
 
-        function showShopping() {
-            document.getElementById("welcome-page").style.display = "none";
-            document.getElementById("shopping-page").style.display = "block";
-        }
-
-        function goBack(page) {
-            document.getElementById("welcome-page").style.display = page === 'welcome' ? "block" : "none";
-            document.getElementById("recipes-page").style.display = page === 'recipes' ? "block" : "none";
-            document.getElementById("shopping-page").style.display = page === 'shopping' ? "block" : "none";
-        }
-
-        function calculateTotal() {
-            const items = document.getElementsByClassName("item");
-            let total = 0;
-
-            for (let i = 0; i < items.length; i++) {
-                const price = parseFloat(items[i].value) || 0;
-                total += price;
+            if (itemName && itemPrice && itemQuantity) {
+                itemList.push({ name: itemName, price: itemPrice, quantity: itemQuantity });
+                document.getElementById("itemName").value = '';
+                document.getElementById("itemPrice").value = '';
+                document.getElementById("itemQuantity").value = '';
+                displayItems();
+            } else {
+                alert("Por favor, preencha todos os campos.");
             }
-            document.getElementById("total-price").innerText = "Total: R$ " + total.toFixed(2);
+        }
+
+        function displayItems() {
+            const itemListDiv = document.getElementById("itemList");
+            itemListDiv.innerHTML = "";
+            let totalCost = 0;
+
+            itemList.forEach(item => {
+                totalCost += item.price * item.quantity;
+                itemListDiv.innerHTML += `<p>${item.name}: R$ ${item.price.toFixed(2)} x ${item.quantity} = R$ ${(item.price * item.quantity).toFixed(2)}</p>`;
+            });
+            itemListDiv.innerHTML += `<p>Total Estimado: R$ ${totalCost.toFixed(2)}</p>`;
         }
     </script>
 </head>
 <body>
+    <h1>Bem-vindo ao EcoAlimentos!</h1>
+    <p>O que você gostaria de fazer?</p>
+    <a href="#compras" class="button" onclick="showSection('compras')">Calcular Valor das Minhas Compras</a>
+    <a href="#receitas" class="button" onclick="showSection('receitas')">Ver Receitas de Reaproveitamento de Alimentos</a>
 
-    <div id="welcome-page">
-        <h1>Bem-vindo!</h1>
-        <p>O que você gostaria de fazer?</p>
-        <a href="javascript:void(0)" class="button" onclick="showShopping()">Calcular Valor das Minhas Compras</a>
-        <a href="javascript:void(0)" class="button" onclick="showRecipes()">Ver Receitas de Reaproveitamento de Alimentos</a>
+    <div id="compras" style="display:none;">
+        <h2>Lista de Compras</h2>
+        <div class="form-container">
+            <input type="text" id="itemName" placeholder="Nome do Item">
+            <input type="number" id="itemPrice" placeholder="Preço Unitário (R$)" step="0.01">
+            <input type="number" id="itemQuantity" placeholder="Quantidade">
+            <button class="button" onclick="addItem()">Adicionar Item</button>
+        </div>
+        <div id="itemList"></div>
     </div>
 
-    <div id="recipes-page">
-        <h1>Receitas de Reaproveitamento de Alimentos</h1>
+    <div id="receitas" style="display:none;">
+        <h2>Receitas de Reaproveitamento de Alimentos</h2>
         <div class="recipe">
-            <img src="https://www.tudogostoso.com.br/uploads/receitas/41876/capa.jpg" alt="Sopa de Legumes Restantes">
-            <h2>Sopa de Legumes Restantes</h2>
-            <p>Use qualquer vegetal que sobrou na geladeira. Refogue cebola e alho, adicione os legumes picados, cubra com caldo e cozinhe até que fiquem macios. Tempere a gosto.</p>
+            <h3>Sopa de Legumes</h3>
+            <p><strong>Ingredientes:</strong> Sobras de legumes, cebola, alho, temperos a gosto.</p>
+            <p><strong>Modo de Preparo:</strong> Refogue cebola e alho, adicione os legumes picados, cubra com água e cozinhe até ficarem macios. Tempere a gosto.</p>
         </div>
         <div class="recipe">
-            <img src="https://www.tudogostoso.com.br/uploads/receitas/225501/capa.jpg" alt="Bolo de Casca de Banana">
-            <h2>Bolo de Casca de Banana</h2>
-            <p>Aproveite as cascas de banana! Bata 3 cascas de banana com 2 ovos, 1 xícara de açúcar, 1/2 xícara de óleo e 2 xícaras de farinha. Asse a 180°C por 30-40 minutos.</p>
+            <h3>Arroz de Forno</h3>
+            <p><strong>Ingredientes:</strong> Sobras de arroz, queijo, presunto, legumes, temperos a gosto.</p>
+            <p><strong>Modo de Preparo:</strong> Misture o arroz com os ingredientes, coloque em um refratário, cubra com queijo e leve ao forno para gratinar.</p>
         </div>
         <div class="recipe">
-            <img src="https://www.tudogostoso.com.br/uploads/receitas/20990/capa.jpg" alt="Salada de Frutas">
-            <h2>Salada de Frutas com Frutas Que Sobram</h2>
-            <p>Reúna as frutas que estão passando do ponto. Corte em pedaços e misture com iogurte natural e mel. Adicione granola por cima para um toque crocante.</p>
+            <h3>Panquecas de Sobras</h3>
+            <p><strong>Ingredientes:</strong> Sobras de carne ou legumes, ovos, farinha, leite.</p>
+            <p><strong>Modo de Preparo:</strong> Misture os ingredientes até formar uma massa. Recheie as panquecas com as sobras e cozinhe em uma frigideira.</p>
         </div>
         <div class="recipe">
-            <img src="https://www.tudogostoso.com.br/uploads/receitas/176857/capa.jpg" alt="Arroz de Sobras">
-            <h2>Arroz de Sobras</h2>
-            <p>Reaproveite arroz cozido. Refogue cebola e alho, adicione o arroz e misture com qualquer proteína (frango, carne ou tofu) e legumes que tiver. Tempere a gosto.</p>
+            <h3>Salada de Frutas</h3>
+            <p><strong>Ingredientes:</strong> Sobras de frutas variadas.</p>
+            <p><strong>Modo de Preparo:</strong> Corte as frutas em pedaços e misture em uma tigela. Sirva gelada.</p>
         </div>
         <div class="recipe">
-            <img src="https://www.tudogostoso.com.br/uploads/receitas/24194/capa.jpg" alt="Pão de Restos de Pão">
-            <h2>Pão Caseiro de Restos de Pão</h2>
-            <p>Rale ou processe o pão velho até virar migalhas. Misture com ovos, leite e temperos. Modele em formas e asse a 180°C até dourar.</p>
+            <h3>Omelete de Verduras</h3>
+            <p><strong>Ingredientes:</strong> Sobras de verduras, ovos, temperos a gosto.</p>
+            <p><strong>Modo de Preparo:</strong> Bata os ovos, misture as verduras picadas e frite em uma frigideira até dourar.</p>
         </div>
         <div class="recipe">
-            <img src="https://www.tudogostoso.com.br/uploads/receitas/178943/capa.jpg" alt="Creme de Legumes">
-            <h2>Creme de Legumes</h2>
-            <p>Utilize restos de legumes cozidos. Bata no liquidificador com caldo de galinha ou vegetal e aqueça até ferver. Sirva com um fio de azeite.</p>
+            <h3>Pão de Queijo com Sobras de Queijo</h3>
+            <p><strong>Ingredientes:</strong> Sobras de queijo, polvilho, ovos, leite.</p>
+            <p><strong>Modo de Preparo:</strong> Misture os ingredientes até formar uma massa. Modele os pães e leve ao forno até dourar.</p>
         </div>
         <div class="recipe">
-            <img src="https://www.tudogostoso.com.br/uploads/receitas/175067/capa.jpg" alt="Frittata de Legumes">
-            <h2>Frittata de Legumes</h2>
-            <p>Reaproveite os legumes que sobraram da refeição anterior. Misture com ovos batidos e cozinhe na frigideira até dourar.</p>
+            <h3>Gratinado de Batatas</h3>
+            <p><strong>Ingredientes:</strong> Sobras de batatas, queijo, creme de leite, temperos.</p>
+            <p><strong>Modo de Preparo:</strong> Misture as batatas cozidas com o creme e o queijo, coloque em um refratário e leve ao forno para gratinar.</p>
         </div>
         <div class="recipe">
-            <img src="https://www.tudogostoso.com.br/uploads/receitas/14274/capa.jpg" alt="Pasta de Berinjela">
-            <h2>Pasta de Berinjela</h2>
-            <p>Use berinjelas que estão passando do ponto. Asse, amasse e misture com azeite, alho e temperos a gosto. Sirva com torradas.</p>
+            <h3>Pizza de Pão</h3>
+            <p><strong>Ingredientes:</strong> Sobras de pão, molho de tomate, queijo, ingredientes a gosto.</p>
+            <p><strong>Modo de Preparo:</strong> Cubra o pão com o molho, queijo e ingredientes, leve ao forno até o queijo derreter.</p>
         </div>
         <div class="recipe">
-            <img src="https://www.tudogostoso.com.br/uploads/receitas/13061/capa.jpg" alt="Panquecas de Restos">
-            <h2>Panquecas de Restos</h2>
-            <p>Use sobras de purê de batata ou legumes. Misture com farinha e ovos, faça panquecas e frite até dourar.</p>
+            <h3>Bolinho de Arroz</h3>
+            <p><strong>Ingredientes:</strong> Sobras de arroz, ovos, farinha de trigo, temperos.</p>
+            <p><strong>Modo de Preparo:</strong> Misture todos os ingredientes, modele em bolinhos e frite até dourar.</p>
         </div>
         <div class="recipe">
-            <img src="https://www.tudogostoso.com.br/uploads/receitas/18876/capa.jpg" alt="Smoothie Verde">
-            <h2>Smoothie Verde com Frutas Passadas</h2>
-            <p>Use frutas maduras e folhas verdes. Bata tudo no liquidificador com água ou leite. Adicione mel a gosto.</p>
+            <h3>Bolo de Casca de Banana</h3>
+            <p><strong>Ingredientes:</strong> Cascas de banana, açúcar, ovos, farinha.</p>
+            <p><strong>Modo de Preparo:</strong> Bata as cascas no liquidificador, misture com os outros ingredientes e asse.</p>
         </div>
         <div class="recipe">
-            <img src="https://www.tudogostoso.com.br/uploads/receitas/21809/capa.jpg" alt="Bolinho de Arroz">
-            <h2>Bolinho de Arroz</h2>
-            <p>Reaproveite arroz cozido e misture com queijo, temperos e ovos. Modele em bolinhos e frite até dourar.</p>
+            <h3>Farofa de Sobras</h3>
+            <p><strong>Ingredientes:</strong> Sobras de arroz ou farofa pronta, temperos a gosto.</p>
+            <p><strong>Modo de Preparo:</strong> Refogue cebola e alho, adicione as sobras e misture bem.</p>
         </div>
         <div class="recipe">
-            <img src="https://www.tudogostoso.com.br/uploads/receitas/12345/capa.jpg" alt="Purê de Casca de Batata">
-            <h2>Purê de Casca de Batata</h2>
-            <p>Aproveite as cascas de batata. Cozinhe, amasse e misture com manteiga e leite para fazer um purê delicioso.</p>
+            <h3>Creme de Legumes</h3>
+            <p><strong>Ingredientes:</strong> Sobras de legumes, leite, temperos.</p>
+            <p><strong>Modo de Preparo:</strong> Cozinhe os legumes, bata no liquidificador com o leite e aqueça antes de servir.</p>
         </div>
-        <button class="back-button" onclick="goBack('welcome')">Voltar</button>
     </div>
 
-    <div id="shopping-page">
-        <h1>Cálculo do Valor das Compras</h1>
-        <div class="shopping-list">
-            <h2>Lista de Compras</h2>
-            <input type="number" class="item" placeholder="Preço do Item 1" oninput="calculateTotal()">
-            <input type="number" class="item" placeholder="Preço do Item 2" oninput="calculateTotal()">
-            <input type="number" class="item" placeholder="Preço do Item 3" oninput="calculateTotal()">
-            <input type="number" class="item" placeholder="Preço do Item 4" oninput="calculateTotal()">
-            <input type="number" class="item" placeholder="Preço do Item 5" oninput="calculateTotal()">
-            <h3 id="total-price">Total: R$ 0.00</h3>
-        </div>
-        <button class="back-button" onclick="goBack('welcome')">Voltar</button>
-    </div>
-
+    <script>
+        function showSection(section) {
+            document.getElementById("compras").style.display = "none";
+            document.getElementById("receitas").style.display = "none";
+            document.getElementById(section).style.display = "block";
+        }
+    </script>
 </body>
 </html>
