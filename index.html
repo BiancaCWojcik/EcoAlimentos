@@ -70,6 +70,7 @@
     </style>
     <script>
         let itemList = [];
+        
         function addItem() {
             const itemName = document.getElementById("itemName").value;
             const itemPrice = parseFloat(document.getElementById("itemPrice").value);
@@ -108,6 +109,17 @@
             finalizeDiv.innerHTML += `<p><strong>Total: R$ ${(itemList.reduce((sum, item) => sum + (item.price * item.quantity), 0)).toFixed(2)}</strong></p>`;
             finalizeDiv.style.display = 'block';
         }
+
+        function showSection(section) {
+            document.getElementById("compras").style.display = 'none';
+            document.getElementById("receitas").style.display = 'none';
+            document.getElementById(section).style.display = 'block';
+        }
+
+        // Exibe a seção de compras por padrão ao carregar a página
+        window.onload = function() {
+            showSection('compras');
+        };
     </script>
 </head>
 <body>
@@ -187,9 +199,8 @@
             </ul>
             <p><strong>Modo de Preparo:</strong></p>
             <ol>
-                <li>Em uma tigela, misture a farinha, leite, ovos, sal e pimenta até formar uma massa homogênea.</li>
-                <li>Unte uma frigideira com óleo e aqueça em fogo médio.</li>
-                <li>Despeje uma concha da massa na frigideira, espalhe bem e cozinhe por cerca de 2 minutos de cada lado.</li>
+                <li>Em uma tigela, misture a farinha, leite, ovos, sal e pimenta até obter uma massa homogênea.</li>
+                <li>Em uma frigideira untada, despeje uma concha da massa e cozinhe por 2 minutos de cada lado.</li>
                 <li>Recheie as panquecas com as sobras de carne ou legumes e sirva.</li>
             </ol>
         </div>
